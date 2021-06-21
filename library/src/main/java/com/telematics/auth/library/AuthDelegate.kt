@@ -10,6 +10,7 @@ import com.telematics.auth.library.api.register.Result
 import com.telematics.auth.library.errors.EmptyResultException
 import com.telematics.auth.library.external.CreateResult
 import com.telematics.auth.library.external.RefreshResult
+import com.telematics.auth.library.external.Task
 import okhttp3.OkHttpClient
 import retrofit2.*
 

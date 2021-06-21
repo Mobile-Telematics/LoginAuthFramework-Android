@@ -2,6 +2,7 @@ package com.telematics.auth.library
 
 import com.telematics.auth.library.external.CreateResult
 import com.telematics.auth.library.external.RefreshResult
+import com.telematics.auth.library.external.Task
 import retrofit2.converter.gson.GsonConverterFactory
 
 object TelematicsAuth {
