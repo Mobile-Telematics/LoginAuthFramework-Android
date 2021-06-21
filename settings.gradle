@@ -1,0 +1,3 @@
+rootProject.name = "Auth"
+include ':app'
+include ':library'
