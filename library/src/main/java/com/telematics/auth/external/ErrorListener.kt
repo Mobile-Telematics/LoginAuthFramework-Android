@@ -1,5 +1,5 @@
 package com.telematics.auth.external
 
-interface ErrorListener {
+fun interface ErrorListener {
 	fun onError(error: Throwable)
 }

@@ -21,22 +21,24 @@ class Task<T> {
 	 * Adds success callback to current [Task]
 	 */
 	@Synchronized
-	fun onSuccess(callback: SuccessListener<T>) {
+	fun onSuccess(callback: SuccessListener<T>): Task<T> {
 		successListener = callback
 		result?.let {
 			successListener?.onSuccess(it)
 		}
+		return this
 	}
 
 	/**
 	 * Adds error catching callback to current [Task]
 	 */
 	@Synchronized
-	fun onError(callback: ErrorListener) {
+	fun onError(callback: ErrorListener): Task<T> {
 		errorListener = callback
 		error?.let {
 			errorListener?.onError(it)
 		}
+		return this
 	}
 
 	@Synchronized
