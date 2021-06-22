@@ -1,15 +1,13 @@
 package com.telematics.auth.api
 
+import com.telematics.auth.api.model.Result
+import com.telematics.auth.api.model.get_profile.UserInfoResponse
 import com.telematics.auth.api.model.login.LoginBody
 import com.telematics.auth.api.model.refresh.RefreshBody
 import com.telematics.auth.api.model.register.AuthBody
-import com.telematics.auth.api.model.Result
-import com.telematics.auth.api.model.get_profile.UserInfoResponse
+import com.telematics.auth.api.model.update_profile.UserUpdateBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UserServiceApi {
 	@POST("v1/Registration/Create")
@@ -38,4 +36,13 @@ interface UserServiceApi {
 		@Header("InstanceKey") instanceKey: String,
 		@Header("Authorization") accessToken: String
 	): Call<ApiResponse<UserInfoResponse>>
+
+	@PUT("v1/Management/Users")
+	fun updateUser(
+		@Header("InstanceId") instanceId: String,
+		@Header("InstanceKey") instanceKey: String,
+		@Header("DeviceToken") deviceToken: String,
+		@Header("Authorization") accessToken: String,
+		@Body body: UserUpdateBody
+	): Call<ApiResponse<Any?>>
 }

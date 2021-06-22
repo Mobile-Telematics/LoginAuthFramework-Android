@@ -18,8 +18,6 @@ data class AuthBody(
 		val lastName: String? = null,
 		@SerializedName("maritalStatus")
 		val maritalStatus: String? = null,
-		@SerializedName("password")
-		val password: String? = null,
 		@SerializedName("phone")
 		val phone: String? = null,
 		@SerializedName("userFields")

@@ -74,6 +74,7 @@ object TelematicsAuth {
 	fun updateUserProfile(
 		instanceId: String,
 		instanceKey: String,
+		deviceToken: String,
 		accessToken: String,
 		email: String? = null,
 		phone: String? = null,
@@ -85,7 +86,22 @@ object TelematicsAuth {
 		childrenCount: Int? = null,
 		address: String? = null,
 		gender: Gender? = null
-	): Task<Any> {
-
+	): Task<Unit> {
+		return delegate.updateUserProfile(
+			instanceId,
+			instanceKey,
+			accessToken,
+			deviceToken,
+			email,
+			phone,
+			clientId,
+			firstName,
+			lastName,
+			birthDay,
+			maritalStatus,
+			childrenCount,
+			address,
+			gender
+		)
 	}
 }

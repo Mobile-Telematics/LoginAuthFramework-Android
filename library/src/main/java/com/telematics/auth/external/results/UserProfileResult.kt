@@ -1,6 +1,5 @@
 package com.telematics.auth.external.results
 
-import android.provider.ContactsContract
 import com.telematics.auth.api.model.Gender
 import com.telematics.auth.api.model.MaritalStatus
 

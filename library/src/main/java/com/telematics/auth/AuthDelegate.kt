@@ -12,6 +12,8 @@ import com.telematics.auth.api.model.login.LoginFields
 import com.telematics.auth.api.model.refresh.RefreshBody
 import com.telematics.auth.api.model.register.AuthBody
 import com.telematics.auth.api.model.register.UserFields
+import com.telematics.auth.api.model.update_profile.UserUpdateBody
+import com.telematics.auth.api.model.update_profile.UserUpdateFields
 import com.telematics.auth.errors.EmptyResultException
 import com.telematics.auth.external.Task
 import com.telematics.auth.external.results.CreateResult
@@ -165,6 +167,59 @@ class AuthDelegate(
 				}
 
 				override fun onFailure(call: Call<ApiResponse<UserInfoResponse>>, t: Throwable) {
+					task.error(t)
+				}
+			}
+		)
+		return task
+	}
+
+	fun updateUserProfile(
+		instanceId: String,
+		instanceKey: String,
+		accessToken: String,
+		deviceToken: String,
+		email: String?,
+		phone: String?,
+		clientId: String?,
+		firstName: String?,
+		lastName: String?,
+		birthDay: String?,
+		maritalStatus: MaritalStatus?,
+		childrenCount: Int?,
+		address: String?,
+		gender: Gender?
+	): Task<Unit> {
+		val task = Task<Unit>()
+
+		val body = UserUpdateBody(
+			address = address,
+			birthday = birthDay,
+			childrenCount = childrenCount,
+			email = email,
+			firstName = firstName,
+			gender = gender?.ordinal,
+			lastName = lastName,
+			maritalStatus = maritalStatus?.name,
+			phone = phone,
+			userFields = UserUpdateFields(clientId = clientId)
+		)
+
+		val authHeader = "Bearer $accessToken"
+		api.updateUser(
+			instanceId, instanceKey, deviceToken, authHeader, body
+		).enqueue(
+			object : Callback<ApiResponse<Any?>> {
+				override fun onResponse(
+					call: Call<ApiResponse<Any?>>,
+					response: Response<ApiResponse<Any?>>
+				) {
+					response.body()?.result?.let {
+						task.success(Unit)
+					} ?: task.error(EmptyResultException())
+				}
+
+				override fun onFailure(call: Call<ApiResponse<Any?>>, t: Throwable) {
 					task.error(t)
 				}
 			}
