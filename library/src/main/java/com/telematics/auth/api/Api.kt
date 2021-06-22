@@ -1,8 +1,8 @@
 package com.telematics.auth.api
 
-import com.telematics.auth.api.refresh.RefreshRequest
-import com.telematics.auth.api.register.AuthBody
-import com.telematics.auth.api.register.Result
+import com.telematics.auth.api.model.refresh.RefreshRequest
+import com.telematics.auth.api.model.register.AuthBody
+import com.telematics.auth.api.model.register.Result
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header

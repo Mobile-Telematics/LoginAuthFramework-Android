@@ -1,6 +1,6 @@
 package com.telematics.auth.api.mappers
 
-import com.telematics.auth.api.register.Result
+import com.telematics.auth.api.model.register.Result
 import com.telematics.auth.external.CreateResult
 import com.telematics.auth.external.RefreshResult
 

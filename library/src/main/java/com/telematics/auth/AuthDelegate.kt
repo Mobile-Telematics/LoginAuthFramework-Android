@@ -5,8 +5,8 @@ import com.telematics.auth.api.ApiResponse
 import com.telematics.auth.api.interceptors.ResponseInterceptor
 import com.telematics.auth.api.mappers.toExternalCreateResult
 import com.telematics.auth.api.mappers.toExternalRefreshResult
-import com.telematics.auth.api.refresh.RefreshRequest
-import com.telematics.auth.api.register.Result
+import com.telematics.auth.api.model.refresh.RefreshRequest
+import com.telematics.auth.api.model.register.Result
 import com.telematics.auth.errors.EmptyResultException
 import com.telematics.auth.external.CreateResult
 import com.telematics.auth.external.RefreshResult

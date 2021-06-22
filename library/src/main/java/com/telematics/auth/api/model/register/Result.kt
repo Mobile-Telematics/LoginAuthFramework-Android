@@ -1,4 +1,4 @@
-package com.telematics.auth.api.register
+package com.telematics.auth.api.model.register
 
 
 import com.google.gson.annotations.SerializedName

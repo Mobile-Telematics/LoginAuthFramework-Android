@@ -1,4 +1,4 @@
-package com.telematics.auth.api.refresh
+package com.telematics.auth.api.model.refresh
 
 
 import com.google.gson.annotations.SerializedName

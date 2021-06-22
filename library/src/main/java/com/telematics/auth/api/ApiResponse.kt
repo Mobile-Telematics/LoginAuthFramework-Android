@@ -12,6 +12,4 @@ data class ApiResponse<out Result>(
 	val msg: String? = null,
 	@SerializedName("Errors")
 	val details: List<ErrorData>? = null
-
-
 )
