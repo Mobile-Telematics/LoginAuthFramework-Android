@@ -1,24 +1,27 @@
 package com.telematics.auth
 
-import com.telematics.auth.api.Api
 import com.telematics.auth.api.ApiResponse
+import com.telematics.auth.api.UserServiceApi
 import com.telematics.auth.api.interceptors.ResponseInterceptor
-import com.telematics.auth.mappers.toExternalCreateResult
-import com.telematics.auth.mappers.toExternalLoginResult
-import com.telematics.auth.mappers.toExternalRefreshResult
 import com.telematics.auth.api.model.Gender
 import com.telematics.auth.api.model.MaritalStatus
+import com.telematics.auth.api.model.Result
+import com.telematics.auth.api.model.get_profile.UserInfoResponse
 import com.telematics.auth.api.model.login.LoginBody
 import com.telematics.auth.api.model.login.LoginFields
 import com.telematics.auth.api.model.refresh.RefreshBody
 import com.telematics.auth.api.model.register.AuthBody
-import com.telematics.auth.api.model.register.Result
 import com.telematics.auth.api.model.register.UserFields
 import com.telematics.auth.errors.EmptyResultException
+import com.telematics.auth.external.Task
 import com.telematics.auth.external.results.CreateResult
 import com.telematics.auth.external.results.LoginResult
 import com.telematics.auth.external.results.RefreshResult
-import com.telematics.auth.external.Task
+import com.telematics.auth.external.results.UserProfileResult
+import com.telematics.auth.mappers.toExternalCreateResult
+import com.telematics.auth.mappers.toExternalLoginResult
+import com.telematics.auth.mappers.toExternalRefreshResult
+import com.telematics.auth.mappers.toExternalUserProfile
 import okhttp3.OkHttpClient
 import retrofit2.*
 
@@ -27,7 +30,7 @@ class AuthDelegate(
 	converterFactory: Converter.Factory
 ) {
 
-	private val api: Api
+	private val api: UserServiceApi
 
 	init {
 		val client = OkHttpClient
@@ -40,7 +43,7 @@ class AuthDelegate(
 			.baseUrl(baseUrl)
 			.addConverterFactory(converterFactory)
 			.build()
-		api = retrofit.create(Api::class.java)
+		api = retrofit.create(UserServiceApi::class.java)
 	}
 
 	fun createDeviceToken(
@@ -59,15 +62,15 @@ class AuthDelegate(
 	): Task<CreateResult> {
 		val task = Task<CreateResult>()
 		val body = AuthBody(
-			email = email?:"",
-			phone = phone?:"",
-			firstName = firstName?:"",
-			lastName = lastName?:"",
-			birthday = birthDay?:"",
-			maritalStatus = maritalStatus?.toString()?:"",
-			childrenCount = childrenCount?:0,
-			address = address?:"",
-			gender = gender?.ordinal?:0,
+			email = email,
+			phone = phone,
+			firstName = firstName,
+			lastName = lastName,
+			birthday = birthDay,
+			maritalStatus = maritalStatus?.toString(),
+			childrenCount = childrenCount,
+			address = address,
+			gender = gender?.ordinal,
 			userFields = UserFields(clientId = clientId)
 		)
 		api.registerUser(instanceId, instanceKey, body).enqueue(
@@ -135,6 +138,33 @@ class AuthDelegate(
 				}
 
 				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {
+					task.error(t)
+				}
+			}
+		)
+		return task
+	}
+
+	fun getUserProfile(
+		instanceId: String,
+		instanceKey: String,
+		accessToken: String
+	): Task<UserProfileResult> {
+		val task = Task<UserProfileResult>()
+
+		val authHeader = "Bearer $accessToken"
+		api.getProfile(instanceId, instanceKey, authHeader).enqueue(
+			object : Callback<ApiResponse<UserInfoResponse>> {
+				override fun onResponse(
+					call: Call<ApiResponse<UserInfoResponse>>,
+					response: Response<ApiResponse<UserInfoResponse>>
+				) {
+					response.body()?.result?.let {
+						task.success(it.toExternalUserProfile())
+					} ?: task.error(EmptyResultException())
+				}
+
+				override fun onFailure(call: Call<ApiResponse<UserInfoResponse>>, t: Throwable) {
 					task.error(t)
 				}
 			}

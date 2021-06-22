@@ -6,6 +6,7 @@ import com.telematics.auth.external.results.CreateResult
 import com.telematics.auth.external.results.LoginResult
 import com.telematics.auth.external.results.RefreshResult
 import com.telematics.auth.external.Task
+import com.telematics.auth.external.results.UserProfileResult
 import retrofit2.converter.gson.GsonConverterFactory
 
 object TelematicsAuth {
@@ -56,5 +57,35 @@ object TelematicsAuth {
 		deviceToken: String
 	): Task<LoginResult> {
 		return delegate.login(instanceId, instanceKey, deviceToken)
+	}
+
+	@JvmStatic
+	fun getUserProfile(
+		instanceId: String,
+		instanceKey: String,
+		accessToken: String
+	): Task<UserProfileResult> {
+		return delegate.getUserProfile(instanceId,
+			instanceKey,
+			accessToken)
+	}
+
+	@JvmStatic
+	fun updateUserProfile(
+		instanceId: String,
+		instanceKey: String,
+		accessToken: String,
+		email: String? = null,
+		phone: String? = null,
+		clientId: String? = null,
+		firstName: String? = null,
+		lastName: String? = null,
+		birthDay: String? = null,
+		maritalStatus: MaritalStatus? = null,
+		childrenCount: Int? = null,
+		address: String? = null,
+		gender: Gender? = null
+	): Task<Any> {
+
 	}
 }

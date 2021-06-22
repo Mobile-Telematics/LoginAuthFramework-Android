@@ -1,7 +1,8 @@
-package com.telematics.auth.api.model.register
+package com.telematics.auth.api.model
 
 
 import com.google.gson.annotations.SerializedName
+import com.telematics.auth.api.model.register.AccessToken
 
 data class Result(
 	@SerializedName("AccessToken")

@@ -3,25 +3,25 @@ import com.google.gson.annotations.SerializedName
 
 data class AuthBody(
 		@SerializedName("address")
-		val address: String = "",
+		val address: String? = null,
 		@SerializedName("birthday")
-		val birthday: String = "",
+		val birthday: String? = null,
 		@SerializedName("childrenCount")
-		val childrenCount: Int = 0,
+		val childrenCount: Int? = null,
 		@SerializedName("email")
-		val email: String = "",
+		val email: String? = null,
 		@SerializedName("firstName")
-		val firstName: String = "",
+		val firstName: String? = null,
 		@SerializedName("gender")
-		val gender: Int = 1,
+		val gender: Int? = null,
 		@SerializedName("lastName")
-		val lastName: String = "",
+		val lastName: String? = null,
 		@SerializedName("maritalStatus")
-		val maritalStatus: String = "",
+		val maritalStatus: String? = null,
 		@SerializedName("password")
-		val password: String = "",
+		val password: String? = null,
 		@SerializedName("phone")
-		val phone: String = "",
+		val phone: String? = null,
 		@SerializedName("userFields")
 		val userFields: UserFields? = null
 )
