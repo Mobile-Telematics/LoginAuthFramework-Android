@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.telematics.auth.api.ApiResponse
 import com.telematics.auth.api.ErrorData
-import com.telematics.auth.errors.FieldDetailsDataError
+import com.telematics.auth.errors.FieldErrorDetailsData
 import okhttp3.Response
 import okhttp3.ResponseBody
 
@@ -20,15 +20,15 @@ fun transform(response: Response, body: String?): Response {
 		.build()
 }
 
-fun transformErrorDetails(response: List<ErrorData>?): List<FieldDetailsDataError>? {
+fun transformErrorDetails(response: List<ErrorData>?): List<FieldErrorDetailsData>? {
 	if (response.isNullOrEmpty()) return null
-	val listFieldErrorDetailsData = ArrayList<FieldDetailsDataError>(response.size)
+	val listFieldErrorDetailsData = ArrayList<FieldErrorDetailsData>(response.size)
 	response.indices.mapTo(listFieldErrorDetailsData) { convert(response[it]) }
 	return listFieldErrorDetailsData
 }
 
-private fun convert(fieldErrorResponse: ErrorData): FieldDetailsDataError {
-	val fieldErrorDetailsData = FieldDetailsDataError()
+private fun convert(fieldErrorResponse: ErrorData): FieldErrorDetailsData {
+	val fieldErrorDetailsData = FieldErrorDetailsData()
 	fieldErrorDetailsData.field = fieldErrorResponse.key
 	fieldErrorDetailsData.detailMessage = fieldErrorResponse.message
 	return fieldErrorDetailsData

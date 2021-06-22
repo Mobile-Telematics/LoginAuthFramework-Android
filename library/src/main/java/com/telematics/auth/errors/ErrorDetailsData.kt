@@ -1,6 +1,6 @@
 package com.telematics.auth.errors
 
 
-open class DetailsDataError(
+open class ErrorDetailsData(
         var detailMessage: String? = null
 )

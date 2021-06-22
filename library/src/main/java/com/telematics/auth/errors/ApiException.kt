@@ -1,8 +1,8 @@
 package com.telematics.auth.errors
 
-data class ApiError (
+data class ApiException (
         val errorCode: Int,
         val msg: String? = null,
-        val details: List<FieldDetailsDataError>? = null
+        val details: List<FieldErrorDetailsData>? = null
 
 ) : Throwable()

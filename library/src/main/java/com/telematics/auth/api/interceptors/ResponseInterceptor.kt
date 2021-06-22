@@ -1,6 +1,6 @@
 package com.telematics.auth.api.interceptors
 
-import com.telematics.auth.errors.ApiError
+import com.telematics.auth.errors.ApiException
 import com.telematics.auth.api.extensions.transform
 import com.telematics.auth.api.extensions.transformErrorDetails
 import okhttp3.Interceptor
@@ -12,7 +12,7 @@ class ResponseInterceptor: Interceptor {
 
 		val code = response.code()
 
-		if (code in 400..500) throw ApiError(code)
+		if (code in 400..500) throw ApiException(code)
 
 		val body = response.body()?.string()
 
@@ -24,8 +24,8 @@ class ResponseInterceptor: Interceptor {
 
 		if (apiResponse.status != 200) {
 			if (apiResponse.status == 422) {
-				throw ApiError(apiResponse.status, apiResponse.msg, transformErrorDetails(apiResponse.details))
-			} else throw ApiError(apiResponse.status, apiResponse.msg)
+				throw ApiException(apiResponse.status, apiResponse.msg, transformErrorDetails(apiResponse.details))
+			} else throw ApiException(apiResponse.status, apiResponse.msg)
 		}
 
 		return transform(response, body)
