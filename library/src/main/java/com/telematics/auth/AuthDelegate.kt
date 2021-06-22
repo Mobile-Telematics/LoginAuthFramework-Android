@@ -3,9 +3,9 @@ package com.telematics.auth
 import com.telematics.auth.api.Api
 import com.telematics.auth.api.ApiResponse
 import com.telematics.auth.api.interceptors.ResponseInterceptor
-import com.telematics.auth.api.mappers.toExternalCreateResult
-import com.telematics.auth.api.mappers.toExternalLoginResult
-import com.telematics.auth.api.mappers.toExternalRefreshResult
+import com.telematics.auth.mappers.toExternalCreateResult
+import com.telematics.auth.mappers.toExternalLoginResult
+import com.telematics.auth.mappers.toExternalRefreshResult
 import com.telematics.auth.api.model.Gender
 import com.telematics.auth.api.model.MaritalStatus
 import com.telematics.auth.api.model.login.LoginBody
