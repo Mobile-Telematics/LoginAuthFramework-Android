@@ -2,7 +2,7 @@ package com.telematics.auth.api
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiResponse<out Result>(
+internal data class ApiResponse<out Result>(
 
 	@SerializedName("Result")
 	val result: Result?,

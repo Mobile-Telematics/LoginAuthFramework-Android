@@ -3,7 +3,7 @@ package com.telematics.auth.api.model.register
 
 import com.google.gson.annotations.SerializedName
 
-data class UserFields(
+internal data class UserFields(
     @SerializedName("ClientId")
     val clientId: String? = null,
     @SerializedName("EnableLogging")

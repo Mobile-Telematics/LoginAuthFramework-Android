@@ -1,7 +1,7 @@
 package com.telematics.auth.api.model.register
 import com.google.gson.annotations.SerializedName
 
-data class AuthBody(
+internal data class AuthBody(
 		@SerializedName("address")
 		val address: String? = null,
 		@SerializedName("birthday")

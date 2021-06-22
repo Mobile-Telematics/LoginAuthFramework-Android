@@ -10,7 +10,7 @@ import com.telematics.auth.external.results.RefreshResult
 import com.telematics.auth.external.results.UserProfileResult
 
 
-fun Result.toExternalCreateResult(): CreateResult {
+internal fun Result.toExternalCreateResult(): CreateResult {
 	return CreateResult(
 		deviceToken = this.deviceToken,
 		refreshToken = this.refreshToken,
@@ -18,21 +18,21 @@ fun Result.toExternalCreateResult(): CreateResult {
 	)
 }
 
-fun Result.toExternalRefreshResult(): RefreshResult {
+internal fun Result.toExternalRefreshResult(): RefreshResult {
 	return RefreshResult(
 		refreshToken = this.refreshToken,
 		accessToken = this.accessToken.token
 	)
 }
 
-fun Result.toExternalLoginResult(): LoginResult {
+internal fun Result.toExternalLoginResult(): LoginResult {
 	return LoginResult(
 		refreshToken = this.refreshToken,
 		accessToken = this.accessToken.token
 	)
 }
 
-fun UserInfoResponse.toExternalUserProfile(): UserProfileResult {
+internal fun UserInfoResponse.toExternalUserProfile(): UserProfileResult {
 	return UserProfileResult(
 		deviceToken = this.deviceToken,
 		email = this.userProfile.email,
@@ -40,10 +40,10 @@ fun UserInfoResponse.toExternalUserProfile(): UserProfileResult {
 		firstName = this.userProfile.firstName,
 		lastName = this.userProfile.lastName,
 		birthDay = this.userProfile.birthday,
-		gender = Gender.parse(this.userProfile.gender?:""),
+		gender = Gender.parse(this.userProfile.gender ?: ""),
 		childrenCount = this.userProfile.childrenCount,
 		address = this.userProfile.address,
-		maritalStatus = MaritalStatus.parse(this.userProfile.maritalStatus?:""),
+		maritalStatus = MaritalStatus.parse(this.userProfile.maritalStatus ?: ""),
 		clientId = this.userFields[1]["ClientId"] as String?
 	)
 }

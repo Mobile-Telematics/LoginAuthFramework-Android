@@ -27,7 +27,7 @@ import com.telematics.auth.mappers.toExternalUserProfile
 import okhttp3.OkHttpClient
 import retrofit2.*
 
-class AuthDelegate(
+internal class AuthDelegate(
 	baseUrl: String,
 	converterFactory: Converter.Factory
 ) {

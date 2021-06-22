@@ -9,25 +9,25 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 
 
-fun transform(body: String?): ApiResponse<Any> {
+internal fun transform(body: String?): ApiResponse<Any> {
 	return Gson().fromJson(body, object : TypeToken<ApiResponse<Any?>>() {}.type)
 }
 
-fun transform(response: Response, body: String?): Response {
+internal fun transform(response: Response, body: String?): Response {
 	return response
 		.newBuilder()
 		.body(ResponseBody.create(response.body()?.contentType(), body))
 		.build()
 }
 
-fun transformErrorDetails(response: List<ErrorData>?): List<FieldErrorDetailsData>? {
+internal fun transformErrorDetails(response: List<ErrorData>?): List<FieldErrorDetailsData>? {
 	if (response.isNullOrEmpty()) return null
 	val listFieldErrorDetailsData = ArrayList<FieldErrorDetailsData>(response.size)
 	response.indices.mapTo(listFieldErrorDetailsData) { convert(response[it]) }
 	return listFieldErrorDetailsData
 }
 
-private fun convert(fieldErrorResponse: ErrorData): FieldErrorDetailsData {
+internal fun convert(fieldErrorResponse: ErrorData): FieldErrorDetailsData {
 	val fieldErrorDetailsData = FieldErrorDetailsData()
 	fieldErrorDetailsData.field = fieldErrorResponse.key
 	fieldErrorDetailsData.detailMessage = fieldErrorResponse.message

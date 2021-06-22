@@ -1,9 +1,8 @@
 package com.telematics.auth.api.model.update_profile
 
 import com.google.gson.annotations.SerializedName
-import com.telematics.auth.api.model.register.UserFields
 
-class UserUpdateBody(
+internal class UserUpdateBody(
 	@SerializedName("address")
 	val address: String? = null,
 	@SerializedName("birthday")

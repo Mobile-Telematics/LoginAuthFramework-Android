@@ -6,7 +6,7 @@ import com.telematics.auth.api.extensions.transformErrorDetails
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ResponseInterceptor: Interceptor {
+internal class ResponseInterceptor: Interceptor {
 	override fun intercept(chain: Interceptor.Chain): Response {
 		val response = chain.proceed(chain.request())
 

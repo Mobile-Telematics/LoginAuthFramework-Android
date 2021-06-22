@@ -2,7 +2,7 @@ package com.telematics.auth.api.model.update_profile
 
 import com.google.gson.annotations.SerializedName
 
-class UserUpdateFields(
+internal class UserUpdateFields(
 	@SerializedName("ClientId")
 	val clientId: String? = null,
 	@SerializedName("EnableLogging")

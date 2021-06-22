@@ -9,7 +9,7 @@ import com.telematics.auth.api.model.update_profile.UserUpdateBody
 import retrofit2.Call
 import retrofit2.http.*
 
-interface UserServiceApi {
+internal interface UserServiceApi {
 	@POST("v1/Registration/Create")
 	fun registerUser(
 		@Header("InstanceId") instanceId: String,
