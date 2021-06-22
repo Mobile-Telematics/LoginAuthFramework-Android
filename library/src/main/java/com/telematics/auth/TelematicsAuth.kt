@@ -3,6 +3,7 @@ package com.telematics.auth
 import com.telematics.auth.api.model.Gender
 import com.telematics.auth.api.model.MaritalStatus
 import com.telematics.auth.external.CreateResult
+import com.telematics.auth.external.LoginResult
 import com.telematics.auth.external.RefreshResult
 import com.telematics.auth.external.Task
 import retrofit2.converter.gson.GsonConverterFactory
@@ -46,5 +47,14 @@ object TelematicsAuth {
 		refreshToken: String
 	): Task<RefreshResult> {
 		return delegate.refreshToken(instanceId, instanceKey, accessToken, refreshToken)
+	}
+
+	@JvmStatic
+	fun login(
+		instanceId: String,
+		instanceKey: String,
+		deviceToken: String
+	): Task<LoginResult> {
+		return delegate.login(instanceId, instanceKey, deviceToken)
 	}
 }

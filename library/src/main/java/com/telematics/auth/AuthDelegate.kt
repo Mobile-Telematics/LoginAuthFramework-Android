@@ -4,15 +4,19 @@ import com.telematics.auth.api.Api
 import com.telematics.auth.api.ApiResponse
 import com.telematics.auth.api.interceptors.ResponseInterceptor
 import com.telematics.auth.api.mappers.toExternalCreateResult
+import com.telematics.auth.api.mappers.toExternalLoginResult
 import com.telematics.auth.api.mappers.toExternalRefreshResult
 import com.telematics.auth.api.model.Gender
 import com.telematics.auth.api.model.MaritalStatus
-import com.telematics.auth.api.model.refresh.RefreshRequest
+import com.telematics.auth.api.model.login.LoginBody
+import com.telematics.auth.api.model.login.LoginFields
+import com.telematics.auth.api.model.refresh.RefreshBody
 import com.telematics.auth.api.model.register.AuthBody
 import com.telematics.auth.api.model.register.Result
 import com.telematics.auth.api.model.register.UserFields
 import com.telematics.auth.errors.EmptyResultException
 import com.telematics.auth.external.CreateResult
+import com.telematics.auth.external.LoginResult
 import com.telematics.auth.external.RefreshResult
 import com.telematics.auth.external.Task
 import okhttp3.OkHttpClient
@@ -92,7 +96,7 @@ class AuthDelegate(
 		refreshToken: String
 	): Task<RefreshResult> {
 		val task = Task<RefreshResult>()
-		val request = RefreshRequest(accessToken, refreshToken)
+		val request = RefreshBody(accessToken, refreshToken)
 		api.refreshToken(instanceId, instanceKey, request).enqueue(
 			object : Callback<ApiResponse<Result>> {
 				override fun onResponse(
@@ -101,6 +105,32 @@ class AuthDelegate(
 				) {
 					response.body()?.result?.let {
 						task.success(it.toExternalRefreshResult())
+					} ?: task.error(EmptyResultException())
+				}
+
+				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {
+					task.error(t)
+				}
+			}
+		)
+		return task
+	}
+
+	fun login(instanceId: String, instanceKey: String, deviceToken: String): Task<LoginResult> {
+		val task = Task<LoginResult>()
+
+		val body = LoginBody(
+			password = instanceKey,
+			loginFields = LoginFields(deviceToken = deviceToken)
+		)
+		api.login(instanceId, body).enqueue(
+			object : Callback<ApiResponse<Result>> {
+				override fun onResponse(
+					call: Call<ApiResponse<Result>>,
+					response: Response<ApiResponse<Result>>
+				) {
+					response.body()?.result?.let {
+						task.success(it.toExternalLoginResult())
 					} ?: task.error(EmptyResultException())
 				}
 

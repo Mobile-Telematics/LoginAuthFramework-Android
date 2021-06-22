@@ -1,6 +1,7 @@
 package com.telematics.auth.api
 
-import com.telematics.auth.api.model.refresh.RefreshRequest
+import com.telematics.auth.api.model.login.LoginBody
+import com.telematics.auth.api.model.refresh.RefreshBody
 import com.telematics.auth.api.model.register.AuthBody
 import com.telematics.auth.api.model.register.Result
 import retrofit2.Call
@@ -20,6 +21,12 @@ interface Api {
 	fun refreshToken(
 		@Header("InstanceId") instanceId: String,
 		@Header("InstanceKey") instanceKey: String,
-		@Body refreshRequest: RefreshRequest
+		@Body refreshBody: RefreshBody
+	): Call<ApiResponse<Result>>
+
+	@POST("v1/Auth/Login")
+	fun login(
+		@Header("InstanceId") instanceId: String,
+		@Body loginBody: LoginBody
 	): Call<ApiResponse<Result>>
 }
