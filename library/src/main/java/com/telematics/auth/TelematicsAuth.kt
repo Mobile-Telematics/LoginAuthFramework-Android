@@ -14,6 +14,22 @@ object TelematicsAuth {
 		AuthDelegate(BuildConfig.USER_SERVICE_URL, GsonConverterFactory.create())
 	}
 
+	/**
+	 * Creates new user with specified [instanceId], [instanceKey] and optional parameters
+	 * @param instanceId (required)
+	 * @param instanceKey (required)
+	 * @param email (optional)
+	 * @param phone (optional)
+	 * @param clientId (optional)
+	 * @param firstName (optional)
+	 * @param lastName (optional)
+	 * @param birthDay (optional) - date-time string in yyyy-MM-dd'T'HH:mm:ss format
+	 * @param maritalStatus (optional) - [MaritalStatus] enum entry
+	 * @param childrenCount (optional)
+	 * @param address (optional) - address string
+	 * @param gender (optional) - [Gender] enum entry
+	 * @return [Task] parametrised with [CreateResult]
+	 */
 	@JvmStatic
 	fun createDeviceToken(instanceId: String,
 						  instanceKey: String,
@@ -40,6 +56,14 @@ object TelematicsAuth {
 			gender)
 	}
 
+	/**
+	 * Refreshes [accessToken] when it expires.
+	 * @param instanceId (required)
+	 * @param instanceKey (required)
+	 * @param accessToken (required)
+	 * @param refreshToken (required)
+	 * @return [Task] parametrised with [RefreshResult]
+	 */
 	@JvmStatic
 	fun refreshToken(
 		instanceId: String,
@@ -50,6 +74,13 @@ object TelematicsAuth {
 		return delegate.refreshToken(instanceId, instanceKey, accessToken, refreshToken)
 	}
 
+	/**
+	 * Authorises user using [instanceId], [instanceKey] and [deviceToken].
+	 * @param instanceId (required)
+	 * @param instanceKey (required)
+	 * @param deviceToken (required)
+	 * @return [Task] parametrised with [RefreshResult]
+	 */
 	@JvmStatic
 	fun login(
 		instanceId: String,
@@ -59,6 +90,13 @@ object TelematicsAuth {
 		return delegate.login(instanceId, instanceKey, deviceToken)
 	}
 
+	/**
+	 * Returns users profile information.
+	 * @param instanceId (required)
+	 * @param instanceKey (required)
+	 * @param accessToken (required)
+	 * @return [Task] parametrised with [UserProfileResult]
+	 */
 	@JvmStatic
 	fun getUserProfile(
 		instanceId: String,
@@ -70,6 +108,24 @@ object TelematicsAuth {
 			accessToken)
 	}
 
+	/**
+	 * Updates user profile information
+	 * @param instanceId (required)
+	 * @param instanceKey (required)
+	 * @param deviceToken (required)
+	 * @param accessToken (required)
+	 * @param email (optional)
+	 * @param phone (optional)
+	 * @param clientId (optional)
+	 * @param firstName (optional)
+	 * @param lastName (optional)
+	 * @param birthDay (optional) - date-time string in yyyy-MM-dd'T'HH:mm:ss format
+	 * @param maritalStatus (optional) - [MaritalStatus] enum entry
+	 * @param childrenCount (optional)
+	 * @param address (optional) - address string
+	 * @param gender (optional) - [Gender] enum entry
+	 * @return [Task] parametrised with [CreateResult]
+	 */
 	@JvmStatic
 	fun updateUserProfile(
 		instanceId: String,
