@@ -15,9 +15,9 @@ import com.telematics.auth.api.model.register.AuthBody
 import com.telematics.auth.api.model.register.Result
 import com.telematics.auth.api.model.register.UserFields
 import com.telematics.auth.errors.EmptyResultException
-import com.telematics.auth.external.CreateResult
-import com.telematics.auth.external.LoginResult
-import com.telematics.auth.external.RefreshResult
+import com.telematics.auth.external.results.CreateResult
+import com.telematics.auth.external.results.LoginResult
+import com.telematics.auth.external.results.RefreshResult
 import com.telematics.auth.external.Task
 import okhttp3.OkHttpClient
 import retrofit2.*

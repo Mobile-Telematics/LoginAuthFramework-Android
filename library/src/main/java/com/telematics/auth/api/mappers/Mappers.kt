@@ -1,9 +1,9 @@
 package com.telematics.auth.api.mappers
 
 import com.telematics.auth.api.model.register.Result
-import com.telematics.auth.external.CreateResult
-import com.telematics.auth.external.LoginResult
-import com.telematics.auth.external.RefreshResult
+import com.telematics.auth.external.results.CreateResult
+import com.telematics.auth.external.results.LoginResult
+import com.telematics.auth.external.results.RefreshResult
 
 
 fun Result.toExternalCreateResult(): CreateResult {
