@@ -14,7 +14,7 @@ import com.telematics.auth.api.model.refresh.RefreshBody
 import com.telematics.auth.api.model.register.AuthBody
 import com.telematics.auth.api.model.register.Result
 import com.telematics.auth.api.model.register.UserFields
-import com.telematics.auth.errors.EmptyResultException
+import com.telematics.auth.errors.EmptyResultError
 import com.telematics.auth.external.results.CreateResult
 import com.telematics.auth.external.results.LoginResult
 import com.telematics.auth.external.results.RefreshResult
@@ -78,7 +78,7 @@ class AuthDelegate(
 				) {
 					response.body()?.result?.let {
 						task.success(it.toExternalCreateResult())
-					} ?: task.error(EmptyResultException())
+					} ?: task.error(EmptyResultError())
 				}
 
 				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {
@@ -105,7 +105,7 @@ class AuthDelegate(
 				) {
 					response.body()?.result?.let {
 						task.success(it.toExternalRefreshResult())
-					} ?: task.error(EmptyResultException())
+					} ?: task.error(EmptyResultError())
 				}
 
 				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {
@@ -131,7 +131,7 @@ class AuthDelegate(
 				) {
 					response.body()?.result?.let {
 						task.success(it.toExternalLoginResult())
-					} ?: task.error(EmptyResultException())
+					} ?: task.error(EmptyResultError())
 				}
 
 				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {

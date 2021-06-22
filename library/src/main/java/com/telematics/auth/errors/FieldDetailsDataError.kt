@@ -1,5 +1,5 @@
 package com.telematics.auth.errors
 
-class FieldErrorDetailsData(
+class FieldDetailsDataError(
         var field: String? = null
-) : ErrorDetailsData()
+) : DetailsDataError()
