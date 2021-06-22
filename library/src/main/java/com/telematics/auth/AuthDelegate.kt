@@ -5,8 +5,12 @@ import com.telematics.auth.api.ApiResponse
 import com.telematics.auth.api.interceptors.ResponseInterceptor
 import com.telematics.auth.api.mappers.toExternalCreateResult
 import com.telematics.auth.api.mappers.toExternalRefreshResult
+import com.telematics.auth.api.model.Gender
+import com.telematics.auth.api.model.MaritalStatus
 import com.telematics.auth.api.model.refresh.RefreshRequest
+import com.telematics.auth.api.model.register.AuthBody
 import com.telematics.auth.api.model.register.Result
+import com.telematics.auth.api.model.register.UserFields
 import com.telematics.auth.errors.EmptyResultException
 import com.telematics.auth.external.CreateResult
 import com.telematics.auth.external.RefreshResult
@@ -35,9 +39,34 @@ class AuthDelegate(
 		api = retrofit.create(Api::class.java)
 	}
 
-	fun createDeviceToken(instanceId: String, instanceKey: String): Task<CreateResult> {
+	fun createDeviceToken(
+		instanceId: String,
+		instanceKey: String,
+		email: String?,
+		phone: String?,
+		clientId: String?,
+		firstName: String?,
+		lastName: String?,
+		birthDay: String?,
+		maritalStatus: MaritalStatus?,
+		childrenCount: Int?,
+		address: String?,
+		gender: Gender?
+	): Task<CreateResult> {
 		val task = Task<CreateResult>()
-		api.registerUser(instanceId, instanceKey).enqueue(
+		val body = AuthBody(
+			email = email?:"",
+			phone = phone?:"",
+			firstName = firstName?:"",
+			lastName = lastName?:"",
+			birthday = birthDay?:"",
+			maritalStatus = maritalStatus?.toString()?:"",
+			childrenCount = childrenCount?:0,
+			address = address?:"",
+			gender = gender?.ordinal?:0,
+			userFields = UserFields(clientId = clientId)
+		)
+		api.registerUser(instanceId, instanceKey, body).enqueue(
 			object : Callback<ApiResponse<Result>> {
 				override fun onResponse(
 					call: Call<ApiResponse<Result>>,

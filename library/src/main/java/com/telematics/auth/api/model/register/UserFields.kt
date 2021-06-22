@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class UserFields(
     @SerializedName("ClientId")
-    val clientId: String?,
+    val clientId: String? = null,
     @SerializedName("EnableLogging")
-    val enableLogging: Boolean?,
+    val enableLogging: Boolean? = null,
     @SerializedName("EnableRealTimeLocation")
-    val enableRealTimeLocation: Boolean?,
+    val enableRealTimeLocation: Boolean? = null,
     @SerializedName("EnableTracking")
-    val enableTracking: Boolean?,
+    val enableTracking: Boolean? = null,
     @SerializedName("Enabled")
-    val enabled: Boolean?
+    val enabled: Boolean? = null
 )
