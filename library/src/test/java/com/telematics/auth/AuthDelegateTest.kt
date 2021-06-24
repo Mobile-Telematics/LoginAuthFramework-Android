@@ -368,4 +368,35 @@ class AuthDelegateTest {
 
 
 	}
+
+	@Test
+	fun checkWrongBirthdayInUserRegister() {
+		val waitLock = CountDownLatch(1)
+		val task = delegate.createDeviceToken(
+			instanceId = instanceId,
+			instanceKey = instanceKey,
+			null,
+			null,
+			null,
+			null,
+			null,
+			"2020-12-01T00:00:00",
+			null,
+			null,
+			null,
+			null
+		).onSuccess {
+			assert(it.accessToken.isNotBlank())
+			assert(it.refreshToken.isNotBlank())
+			assert(it.deviceToken.isNotBlank())
+			deviceToken = it.deviceToken
+			accessToken = it.accessToken
+			refreshToken = it.refreshToken
+			waitLock.countDown()
+		}.onError {
+			assert(it is IllegalArgumentException)
+			waitLock.countDown()
+		}
+		waitLock.await()
+	}
 }

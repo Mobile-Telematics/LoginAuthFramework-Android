@@ -24,6 +24,7 @@ import com.telematics.auth.mappers.toExternalCreateResult
 import com.telematics.auth.mappers.toExternalLoginResult
 import com.telematics.auth.mappers.toExternalRefreshResult
 import com.telematics.auth.mappers.toExternalUserProfile
+import com.telematics.auth.utils.DateUtils
 import okhttp3.OkHttpClient
 import retrofit2.*
 
@@ -63,6 +64,10 @@ internal class AuthDelegate(
 		gender: Gender?
 	): Task<CreateResult> {
 		val task = Task<CreateResult>()
+		birthDay?.let { date ->
+			if (DateUtils.checkDate(date)) task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd'T'HH:mm:ss format"))
+			return task
+		}
 		val body = AuthBody(
 			email = email,
 			phone = phone,
@@ -192,6 +197,10 @@ internal class AuthDelegate(
 	): Task<Unit> {
 		val task = Task<Unit>()
 
+		birthDay?.let { date ->
+			if (DateUtils.checkDate(date)) task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd'T'HH:mm:ss format"))
+			return task
+		}
 		val body = UserUpdateBody(
 			address = address,
 			birthday = birthDay,
