@@ -3,7 +3,7 @@ package com.telematics.auth.api.model.get_profile
 
 import com.google.gson.annotations.SerializedName
 
-data class UserProfile(
+internal data class UserProfile(
     @SerializedName("Address")
     val address: String? = null,
     @SerializedName("Birthday")

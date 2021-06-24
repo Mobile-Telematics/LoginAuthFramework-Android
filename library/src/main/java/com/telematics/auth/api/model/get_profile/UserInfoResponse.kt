@@ -3,7 +3,7 @@ package com.telematics.auth.api.model.get_profile
 
 import com.google.gson.annotations.SerializedName
 
-data class UserInfoResponse(
+internal data class UserInfoResponse(
 	@SerializedName("DeviceToken")
 	val deviceToken: String,
 	@SerializedName("Status")
