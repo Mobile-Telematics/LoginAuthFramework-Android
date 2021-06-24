@@ -3,6 +3,9 @@ package com.telematics.auth.external.results
 import com.telematics.auth.api.model.Gender
 import com.telematics.auth.api.model.MaritalStatus
 
+/**
+ * Represents user profile result
+ */
 data class UserProfileResult(
 	val deviceToken: String,
 	val email: String? = null,

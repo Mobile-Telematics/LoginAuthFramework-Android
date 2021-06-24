@@ -46,11 +46,11 @@ android {
     }
 }
 
-
-dokkaHtml.configure {
+dokkaHtml.configure{
     dokkaSourceSets {
         named("main") {
             noAndroidSdkLink.set(false)
+            displayName "Telematics Authorization library"
         }
     }
 }

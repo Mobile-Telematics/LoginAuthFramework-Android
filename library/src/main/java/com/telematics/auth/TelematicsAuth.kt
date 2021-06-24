@@ -9,6 +9,11 @@ import com.telematics.auth.external.Task
 import com.telematics.auth.external.results.UserProfileResult
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Entry point of Telematics authorization library.
+ *
+ * Compatible with both Kotlin and Java languages
+ */
 object TelematicsAuth {
 	private val delegate: AuthDelegate by lazy {
 		AuthDelegate(BuildConfig.USER_SERVICE_URL, GsonConverterFactory.create())
