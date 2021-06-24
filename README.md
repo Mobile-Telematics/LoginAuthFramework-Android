@@ -69,7 +69,7 @@ Call `TelematicsAuth.createDeviceToken` method that takes an `instanceId`, `inst
 
 That's it! Now you are ready to use our authorization library. 
 
-Also you can check references in our doc.
+Also you can check [references in our doc](https://mobile-telematics.github.io/LoginAuthFramework-Android/).
 
 Happy coding!
 
