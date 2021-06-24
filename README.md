@@ -41,6 +41,11 @@ dependencies {
 }
 ```
 
+3. If you are using R8 or ProGuard add this line to options:
+```
+    -keep public class com.telematicssdk.auth.** {*;}
+```
+
 ## Example
 
 Let's dive in and see library's API. The main entry point of the library is `TelematicsAuth` object.
