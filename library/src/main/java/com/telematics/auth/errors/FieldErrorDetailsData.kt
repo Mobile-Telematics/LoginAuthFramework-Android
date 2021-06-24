@@ -6,8 +6,7 @@ package com.telematics.auth.errors
  *
  * Contains two parameters inside: field and detailed message.
  *
- * @param field on which field occurs an error
- * @param message detailed message about error
+ * @property field On which field occurs an error
  */
 class FieldErrorDetailsData(
         var field: String? = null
