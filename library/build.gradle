@@ -50,7 +50,29 @@ dokkaHtml.configure{
     dokkaSourceSets {
         named("main") {
             noAndroidSdkLink.set(false)
-            displayName "Telematics Authorization library"
+            moduleName.set("Telematics Authorization library")
+            platform.set("jvm")
+            displayName.set("JVM")
+        }
+    }
+}
+dokkaJavadoc.configure{
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+            moduleName.set("Telematics Authorization library")
+            platform.set("jvm")
+            displayName.set("JVM")
+        }
+    }
+}
+dokkaJekyll.configure{
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+            moduleName.set("Telematics Authorization library")
+            platform.set("jvm")
+            displayName.set("JVM")
         }
     }
 }
