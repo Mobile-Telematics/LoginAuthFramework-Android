@@ -5,7 +5,7 @@ import java.io.IOException
 /**
  * Telematics API exception
  *
- * @property errorCode html-code of the error
+ * @property errorCode http-code of the error
  * @property msg message og the error
  * @property details detailed info about error
  */
