@@ -44,6 +44,6 @@ internal fun UserInfoResponse.toExternalUserProfile(): UserProfileResult {
 		childrenCount = this.userProfile.childrenCount,
 		address = this.userProfile.address,
 		maritalStatus = MaritalStatus.parse(this.userProfile.maritalStatus ?: ""),
-		clientId = this.userFields[1]["ClientId"] as String?
+		clientId = this.userFields.find { it.containsKey("ClientId") }?.get("ClientId") as String?
 	)
 }

@@ -69,10 +69,10 @@ internal class AuthDelegate(
 			firstName = firstName,
 			lastName = lastName,
 			birthday = birthDay,
-			maritalStatus = maritalStatus?.toString(),
+			maritalStatus = maritalStatus?.code.toString(),
 			childrenCount = childrenCount,
 			address = address,
-			gender = gender?.ordinal,
+			gender = gender?.name,
 			userFields = UserFields(clientId = clientId)
 		)
 		api.registerUser(instanceId, instanceKey, body).enqueue(
@@ -198,9 +198,9 @@ internal class AuthDelegate(
 			childrenCount = childrenCount,
 			email = email,
 			firstName = firstName,
-			gender = gender?.ordinal,
+			gender = gender?.name,
 			lastName = lastName,
-			maritalStatus = maritalStatus?.name,
+			maritalStatus = maritalStatus?.code.toString(),
 			phone = phone,
 			userFields = UserUpdateFields(clientId = clientId)
 		)
@@ -214,9 +214,7 @@ internal class AuthDelegate(
 					call: Call<ApiResponse<Any?>>,
 					response: Response<ApiResponse<Any?>>
 				) {
-					response.body()?.result?.let {
-						task.success(Unit)
-					} ?: task.error(EmptyResultException())
+					task.success(Unit)
 				}
 
 				override fun onFailure(call: Call<ApiResponse<Any?>>, t: Throwable) {

@@ -12,9 +12,9 @@ internal class ResponseInterceptor: Interceptor {
 
 		val code = response.code()
 
-		if (code in 400..500) throw ApiException(code)
-
 		val body = response.body()?.string()
+
+		if (code in 400..500) throw ApiException(code, body)
 
 		if (code == 204) return transform(response, body)
 

@@ -13,7 +13,7 @@ internal data class AuthBody(
 		@SerializedName("firstName")
 		val firstName: String? = null,
 		@SerializedName("gender")
-		val gender: Int? = null,
+		val gender: String? = null,
 		@SerializedName("lastName")
 		val lastName: String? = null,
 		@SerializedName("maritalStatus")
