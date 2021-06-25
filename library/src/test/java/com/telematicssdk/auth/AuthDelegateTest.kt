@@ -13,8 +13,8 @@ class AuthDelegateTest {
 		"https://user.telematicssdk.com/",
 		GsonConverterFactory.create()
 	)
-	private val instanceId = "abe4f21d-2af1-48b0-a777-d05a1a9f43c8"
-	private val instanceKey = "52f37202-6657-40e7-b438-13419b15c8d1"
+	private val instanceId = ""
+	private val instanceKey = ""
 	private lateinit var deviceToken: String
 	private lateinit var accessToken: String
 	private lateinit var refreshToken: String
@@ -270,7 +270,7 @@ class AuthDelegateTest {
 	@Test
 	fun login() {
 		val waitLock = CountDownLatch(1)
-		val deviceToken = "1bc853ff-0d65-4373-a5b1-ab4d4cf7119f"
+		val deviceToken = ""
 		delegate.login(
 			instanceId = instanceId,
 			instanceKey = instanceKey,
