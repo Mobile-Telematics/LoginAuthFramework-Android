@@ -14,12 +14,12 @@ LoginAuth Framework main functions:
 
 ## Credentials
 
-Before you start using the framework, make sure you registered a company account in the [Datahub](https://userdatahub.com/) and obtained `InstanceId` and`InstanceKey`. If you are new, please refer to the [documentation](doc.telematicssdk.com) and register your company account in Datahub. [Sing Up](https://userdatahub.com/user/registration)
+Before you start using the library, make sure you registered a company account in the [Datahub](https://userdatahub.com/) and obtained `InstanceId` and`InstanceKey`. If you are new, please refer to the [documentation](doc.telematicssdk.com) and register your company account in Datahub. [Sing Up](https://userdatahub.com/user/registration)
 
 
 ## Basic concepts
 
-`deviceToken` - is the main individual SDK user identifier for your app. this identifier is used as a key across all our services.
+`deviceToken` - is the main individual SDK user identifier for your app. This identifier is used as a key across all our services.
 
 `accessToken` - or JSON Web Token (JWT) is the main UserService API key, that allows you to get user individual statistics and user scoring by UserService APIs calls.
 
