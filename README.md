@@ -4,7 +4,7 @@
 
 This library is created by DATA MOTION PTE. LTD. and allows you to integrate with our UserService API in a few steps.
 
-LoginAuth Framework has three main functions:
+LoginAuth Framework main functions:
 1. Register `deviceToken` for each new Telematics SDK user.
 2. Refresh the `accessToken` when it is expired.
 3. Authorize existing SDK user
