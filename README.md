@@ -6,7 +6,7 @@ This library is created by DATA MOTION PTE. LTD. and allows you to integrate wit
 
 LoginAuth Framework main functions:
 1. Register `deviceToken` for each new Telematics SDK user.
-2. Refresh the `accessToken` when it is expired.
+2. Refresh the `accessToken (JWT)` when it is expired.
 3. Authorize existing SDK user
 4. Get authorized user profile info
 5. Update authorized user profile info
