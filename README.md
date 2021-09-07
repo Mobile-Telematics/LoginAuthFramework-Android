@@ -1,4 +1,4 @@
-# Telematics authorization library for Android
+# LoginAuth Framework for Android
 
 ## Description
 
