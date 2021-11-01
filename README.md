@@ -29,7 +29,11 @@ Before you start using the framework, make sure you registered a company account
 ## Setup
 
 Here you can find a short video guide, how to add LoginAuth Framework to your Android app:
-https://www.youtube.com/watch?v=jpdLDzMdCuw&ab
+
+[![Watch the video](https://github.com/Mobile-Telematics/LoginAuthFramework-Android/blob/master/Android%20LoginAuth%20Framework.png)](https://www.youtube.com/watch?v=jpdLDzMdCuw&ab)
+
+
+
 
 1. Add our maven-repository to your `build.gradle` file:
 ``` groovy
