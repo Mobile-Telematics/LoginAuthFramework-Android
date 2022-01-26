@@ -66,7 +66,7 @@ internal class AuthDelegate(
 		val task = Task<CreateResult>()
 		birthDay?.let { date ->
             if (!DateUtils.checkDate(date)) {
-                task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd'T'HH:mm:ss format"))
+                task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd format"))
                 return task
             }
 		}
@@ -201,7 +201,7 @@ internal class AuthDelegate(
 
 		birthDay?.let { date ->
 			if (!DateUtils.checkDate(date)) {
-			    task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd'T'HH:mm:ss format"))
+			    task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd format"))
 			    return task
 			}
 		}
