@@ -50,33 +50,165 @@ dependencies {
 
 3. If you are using R8 or ProGuard add this line to options:
 ```
-    -keep public class com.telematicssdk.auth.** {*;}
+-keep public class com.telematicssdk.auth.** {*;}
 ```
 
-## Example
+## Methods
+### Create DeviceToken
 
-Let's dive in and see library's API. The main entry point of the library is `TelematicsAuth` object.
-It's an Kotlin `Object` (or static class for Java users) that contains inside all methods.
-
-Every method returns a `Task` class. It's a task that should be processed and contains inside callbacks about success or error.
-
-Let's see how it work. In this example we will register a new empty user (without additional fields):
-
-Call `TelematicsAuth.createDeviceToken` method that takes an `instanceId`, `instanceKey` and creates a new empty user:
-
+Each SDK user has to have a `Devicetoken` and be associated with the app users. To create `DeviceToken` please use the method below. To complete a call, you are required to provide `instanceId` & `instanceKey`. If you still have quiestions on how to obtain the credentails, please refer to the [documentation](https://docs.telematicssdk.com/docs/datahub#user-group-credentials)
+    
 ``` kotlin
     TelematicsAuth.createDeviceToken(
         instanceId = "<your instanceId>",
-        instanceKey = "<your instanceKey>")
-    .onSuccess { result ->
-        println(result.deviceToken)
-        println(result.accessToken)
-        println(result.refreshToken)
-    }
-    .onError { e ->
-        e.printStackTrace()
-    }
+        instanceKey = "<your instanceKey>"
+     )
+        .onSuccess {
+            it.deviceToken
+            it.accessToken
+            it.refreshToken
+        }
+        .onError { e ->
+            e.printStackTrace()
+        }
+```
 
+
+
+Once user is registered, you will receive the user credentails. make sure you pass the `Devicetoken` to your server and store it against a user profile, then pass it to your App - this is the main user detials that you will use for our services.
+
+Additionally, you can create a user's `deviceToken` and get the necessary keys (`accessToken`, `refreshToken`) with additional parameters. This is not a required method, it just allows you to store the user profile in a different way. You can specify the below given parameters when creating a user's deviceToken:
+
+- email
+- phone
+- firstName
+- lastName
+- address
+- birthday
+- gender
+- maritalStatus
+- childrenCount
+- clientId
+
+``` kotlin
+    TelematicsAuth.createDeviceToken(
+            instanceId = "<your instanceId>",
+            instanceKey = "<your instanceKey>"
+            email = "mail@mail.mail",
+            phone = "+10000000000",
+            clientId = "idOptional",
+            firstName = "TELEMATICS_USERNAME",
+            lastName = "TELEMATICS_LASTNAME",
+            birthDay = "1970-01-01",
+            maritalStatus = MaritalStatus.Married,
+            childrenCount = 0,
+            address = "CITY",
+            gender = Gender.Male
+        )
+            .onSuccess {
+                it.deviceToken
+                it.accessToken
+                it.refreshToken
+            }
+            .onError { e ->
+                e.printStackTrace()                
+            }
+```
+
+### Refresh Access Token
+
+Each `accessToken` has a limmited lifetime and in a certain period of time it is expired. As a result, when you call our API using invalid `accessToken` you will receive an Error `Unauthorized 401`.
+**Error 401** indicates that the user's `accessToken` has been expired. If so, as the first step, you have to update the `accessToken`.
+
+To update the `accessToken`, you are required to provide the latest `accessToken` & `refreshToken` to the method below.
+
+
+``` kotlin
+    TelematicsAuth.refreshToken(
+        instanceId = "<your instanceId>",
+        instanceKey = "<your instanceKey>",
+        accessToken = "<your accessToken>",
+        refreshToken = "<your refreshToken>"
+    )
+        .onSuccess {
+            it.refreshToken
+        }
+        .onError {e ->
+            e.printStackTrace()
+        }
+```
+
+In response you will receive new `accessToken`.
+
+
+### Get Access Token for existing SDK users
+
+During the app usage, there may be several scenarios when the app loses `accessToken`, for example if the a user changes a smartphone or logs out. BTW, that is a reason why we strongly recommend you to store the `deviceToken` on your backend side. `deviceToken` cannot be restored if it is lost!
+
+We provide you with a simple re-authorization, a method that you can use to get a valid `accessToken` for a particular user throught providing `DeviceToken`
+To use this mehod, you need `deviceToken`, `instanceId`, and `instanceKey` of which group the user belongs. in this case, `Devicetoken` works as a login, `instancekey` as a password. Then you can re-login the user and get a valid `accessToken` & `refreshToken`.
+
+``` kotlin
+    TelematicsAuth.login(
+       instanceId = "<your instanceId>",
+       instanceKey = "<your instanceKey>",
+       deviceToken = "<your deviceToken>" 
+    )
+        .onSuccess {
+            it.accessToken
+            it.refreshToken
+        }
+        .onError {e ->
+            e.printStackTrace()           
+        }
+```
+
+In response, you will receive a new `accessToken` and `refreshToken`.
+
+## Additional methods
+
+### Get User Profile
+You can always request information about the user profile anytime:
+
+``` kotlin
+    TelematicsAuth.getUserProfile(
+        instanceId = "<your instanceId>",
+        instanceKey = "<your instanceKey>",
+        accessToken = "<your accessToken>"
+    )
+        .onSuccess {user ->
+            user
+        }
+        .onError {{e ->
+            e.printStackTrace()    
+        }
+```
+    
+### Update User
+
+``` kotlin 
+    TelematicsAuth.updateUserProfile(
+       instanceId = "<your instanceId>",
+       instanceKey = "<your instanceKey>",
+       deviceToken = "<your deviceToken>",
+       accessToken = "<your accessToken>",
+       email = "mail@mail.mail",
+       phone = "+10000000000",
+       clientId = "idOptional",
+       firstName = "TELEMATICS_USERNAME",
+       lastName = "TELEMATICS_LASTNAME",
+       birthDay = "1970-01-01",
+       maritalStatus = MaritalStatus.Married,
+       childrenCount = 0,
+       address = "CITY",
+       gender = Gender.Male
+    )
+        .onSuccess {
+
+        }
+        .onError {
+
+        }
 ```
 
 That's it! Now you are ready to use our authorization library. 
