@@ -65,7 +65,7 @@ internal class AuthDelegate(
 	): Task<CreateResult> {
 		val task = Task<CreateResult>()
 		birthDay?.let { date ->
-			if (DateUtils.checkDate(date)) task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd'T'HH:mm:ss format"))
+			if (!DateUtils.checkDate(date)) task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd'T'HH:mm:ss format"))
 			return task
 		}
 		val body = AuthBody(
