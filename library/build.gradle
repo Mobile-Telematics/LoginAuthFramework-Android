@@ -11,7 +11,7 @@ repositories {
 }
 android {
     group = 'com.telematicssdk'
-    version = "1.0.0"
+    version = "1.0.1"
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
