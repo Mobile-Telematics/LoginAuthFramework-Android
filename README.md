@@ -44,7 +44,7 @@ maven {
 2. Import library:
 ``` groovy
 dependencies {
-    implementation "com.telematicssdk:auth:1.0.0"
+    implementation "com.telematicssdk:auth:1.0.1"
 }
 ```
 
