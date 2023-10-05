@@ -1,0 +1,59 @@
+[versions]
+
+# ----- Base app settings ------
+# the API level to compile your project
+compileSdk = "34"
+# the minimum SDK version
+minSdk = "21"
+# the target SDK version
+targetSdk = "34"
+# -----------------------------
+
+androidGradlePlugin = "8.1.1"
+androidDocumentationPlugin = "1.9.0"
+kotlin = "1.9.0"
+
+androidxAppCompat = "1.6.1"
+androidxConstraintLayout = "2.1.4"
+androidxCoreKtx = "1.12.0"
+
+androidxTestEspresso = "3.5.1"
+androidxTestExtJunit = "1.1.5"
+
+junit = "4.13.2"
+
+googleMaterial = "1.9.0"
+
+okhttp = "4.11.0"
+
+retrofit = "2.9.0"
+
+
+[libraries]
+
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidxConstraintLayout" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
+
+
+google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
+
+# retrofit
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExtJunit" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxTestEspresso" }
+
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+#kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+#kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+

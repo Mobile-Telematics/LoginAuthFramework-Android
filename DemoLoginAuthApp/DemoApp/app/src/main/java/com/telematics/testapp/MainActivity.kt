@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         )
             .onSuccess{
                 it.deviceToken
+                it.accessToken
+                it.refreshToken
             }
             .onError{
 
@@ -96,10 +98,30 @@ class MainActivity : AppCompatActivity() {
             refreshToken
         )
             .onSuccess{
+                it.accessToken
                 it.refreshToken
             }
             .onError{
                 
+            }
+    }
+
+
+    fun refreshTokenOrLogin(accessToken: String, refreshToken: String, deviceToken: String){
+
+        TelematicsAuth.refreshToken(
+            INSTANCE_ID,
+            INSTANCE_KEY,
+            deviceToken,
+            accessToken,
+            refreshToken
+        )
+            .onSuccess{
+                it.accessToken
+                it.refreshToken
+            }
+            .onError{
+
             }
     }
 }

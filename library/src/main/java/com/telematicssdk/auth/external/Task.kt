@@ -1,5 +1,10 @@
 package com.telematicssdk.auth.external
 
+import android.util.Log
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
+
 
 /**
  * Represents a Task to be processed
@@ -63,4 +68,14 @@ class Task<T> {
 		successListener = null
 		errorListener = null
 	}
+
+	suspend fun await(): T =
+		suspendCoroutine { continuation ->
+			onSuccess {
+				continuation.resume(it)
+			}
+			onError {
+				continuation.resumeWithException(it)
+			}
+		}
 }

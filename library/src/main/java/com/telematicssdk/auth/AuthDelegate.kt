@@ -3,6 +3,7 @@ package com.telematicssdk.auth
 import com.telematicssdk.auth.api.ApiResponse
 import com.telematicssdk.auth.api.UserServiceApi
 import com.telematicssdk.auth.api.interceptors.ResponseInterceptor
+import com.telematicssdk.auth.api.interceptors.TimeoutInterceptor
 import com.telematicssdk.auth.api.model.Gender
 import com.telematicssdk.auth.api.model.MaritalStatus
 import com.telematicssdk.auth.api.model.Result
@@ -14,6 +15,7 @@ import com.telematicssdk.auth.api.model.register.AuthBody
 import com.telematicssdk.auth.api.model.register.UserFields
 import com.telematicssdk.auth.api.model.update_profile.UserUpdateBody
 import com.telematicssdk.auth.api.model.update_profile.UserUpdateFields
+import com.telematicssdk.auth.errors.ApiException
 import com.telematicssdk.auth.errors.EmptyResultException
 import com.telematicssdk.auth.external.Task
 import com.telematicssdk.auth.external.results.CreateResult
@@ -38,8 +40,16 @@ internal class AuthDelegate(
 	init {
 		val client = OkHttpClient
 			.Builder()
+			.addInterceptor(
+				TimeoutInterceptor(
+					connectTimeoutMillis = 30_000,
+					readTimeoutMillis = 30_000,
+					writeTimeoutMillis = 30_000
+				)
+			)
 			.addInterceptor(ResponseInterceptor())
 			.build()
+
 		val retrofit = Retrofit
 			.Builder()
 			.client(client)
@@ -65,7 +75,7 @@ internal class AuthDelegate(
 	): Task<CreateResult> {
 		val task = Task<CreateResult>()
 		birthDay?.let { date ->
-            if (!DateUtils.checkDate(date)) {
+            if (date.isNotEmpty() && !DateUtils.checkDate(date)) {
                 task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd format"))
                 return task
             }
@@ -126,6 +136,66 @@ internal class AuthDelegate(
 			}
 		)
 		return task
+	}
+
+	fun refreshTokenOrLogin(
+		instanceId: String,
+		instanceKey: String,
+		deviceToken: String,
+		accessToken: String,
+		refreshToken: String
+	): Task<RefreshResult> {
+		val task = Task<RefreshResult>()
+		val request = RefreshBody(accessToken, refreshToken)
+		api.refreshToken(instanceId, instanceKey, request).enqueue(
+			object : Callback<ApiResponse<Result>> {
+				override fun onResponse(
+					call: Call<ApiResponse<Result>>,
+					response: Response<ApiResponse<Result>>
+				) {
+					response.body()?.result?.let {
+						task.success(it.toExternalRefreshResult())
+					} ?: tryLogin(instanceId, instanceKey, deviceToken, task)
+				}
+
+				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {
+					if (t is ApiException && t.errorCode == 400) {
+						tryLogin(instanceId, instanceKey, deviceToken, task)
+					} else {
+						task.error(t)
+					}
+				}
+			}
+		)
+		return task
+	}
+
+	private fun tryLogin(
+		instanceId: String,
+		instanceKey: String,
+		deviceToken: String,
+		task: Task<RefreshResult>
+	) {
+		val body = LoginBody(
+			password = instanceKey,
+			loginFields = LoginFields(deviceToken = deviceToken)
+		)
+		api.login(instanceId, body).enqueue(
+			object : Callback<ApiResponse<Result>> {
+				override fun onResponse(
+					call: Call<ApiResponse<Result>>,
+					response: Response<ApiResponse<Result>>
+				) {
+					response.body()?.result?.let {
+						task.success(it.toExternalRefreshResult())
+					} ?: task.error(EmptyResultException())
+				}
+
+				override fun onFailure(call: Call<ApiResponse<Result>>, t: Throwable) {
+					task.error(t)
+				}
+			}
+		)
 	}
 
 	fun login(instanceId: String, instanceKey: String, deviceToken: String): Task<LoginResult> {
@@ -200,7 +270,7 @@ internal class AuthDelegate(
 		val task = Task<Unit>()
 
 		birthDay?.let { date ->
-			if (!DateUtils.checkDate(date)) {
+			if (date.isNotEmpty() && !DateUtils.checkDate(date)) {
 			    task.error(IllegalArgumentException("Birthday doesn't match yyyy-MM-dd format"))
 			    return task
 			}

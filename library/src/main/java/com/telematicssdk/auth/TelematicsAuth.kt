@@ -49,7 +49,10 @@ object TelematicsAuth {
 						  address: String? = null,
 						  gender: Gender? = null
 	): Task<CreateResult> {
-		return delegate.createDeviceToken(instanceId, instanceKey, email,
+		return delegate.createDeviceToken(
+			instanceId,
+			instanceKey,
+			email,
 			phone,
 			clientId,
 			firstName,
@@ -58,7 +61,8 @@ object TelematicsAuth {
 			maritalStatus,
 			childrenCount,
 			address,
-			gender)
+			gender
+		)
 	}
 
 	/**
@@ -76,7 +80,38 @@ object TelematicsAuth {
 		accessToken: String,
 		refreshToken: String
 	): Task<RefreshResult> {
-		return delegate.refreshToken(instanceId, instanceKey, accessToken, refreshToken)
+		return delegate.refreshToken(
+			instanceId,
+			instanceKey,
+			accessToken,
+			refreshToken
+		)
+	}
+
+	/**
+	 * Refreshes [accessToken] when it expires or authorises user using [instanceId], [instanceKey] and [deviceToken] when [refreshToken] expires.
+	 * @param instanceId (required)
+	 * @param instanceKey (required)
+	 * @param deviceToken (required)
+	 * @param accessToken (required)
+	 * @param refreshToken (required)
+	 * @return [Task] parametrised with [RefreshResult]
+	 */
+	@JvmStatic
+	fun refreshTokenOrLogin(
+		instanceId: String,
+		instanceKey: String,
+		deviceToken: String,
+		accessToken: String,
+		refreshToken: String
+	): Task<RefreshResult> {
+		return delegate.refreshTokenOrLogin(
+			instanceId,
+			instanceKey,
+			deviceToken,
+			accessToken,
+			refreshToken
+		)
 	}
 
 	/**
@@ -92,7 +127,11 @@ object TelematicsAuth {
 		instanceKey: String,
 		deviceToken: String
 	): Task<LoginResult> {
-		return delegate.login(instanceId, instanceKey, deviceToken)
+		return delegate.login(
+			instanceId,
+			instanceKey,
+			deviceToken
+		)
 	}
 
 	/**
@@ -108,9 +147,11 @@ object TelematicsAuth {
 		instanceKey: String,
 		accessToken: String
 	): Task<UserProfileResult> {
-		return delegate.getUserProfile(instanceId,
+		return delegate.getUserProfile(
+			instanceId,
 			instanceKey,
-			accessToken)
+			accessToken
+		)
 	}
 
 	/**

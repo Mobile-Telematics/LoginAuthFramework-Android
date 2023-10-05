@@ -44,7 +44,7 @@ maven {
 2. Import library:
 ``` groovy
 dependencies {
-    implementation "com.telematicssdk:auth:1.0.1"
+    implementation "com.telematicssdk:auth:1.1.0"
 }
 ```
 
@@ -117,7 +117,7 @@ Additionally, you can create a user's `deviceToken` and get the necessary keys (
 
 ### Refresh Access Token
 
-Each `accessToken` has a limmited lifetime and in a certain period of time it is expired. As a result, when you call our API using invalid `accessToken` you will receive an Error `Unauthorized 401`.
+Each `accessToken` has a limited lifetime and in a certain period of time it is expired. As a result, when you call our API using invalid `accessToken` you will receive an Error `Unauthorized 401`.
 **Error 401** indicates that the user's `accessToken` has been expired. If so, as the first step, you have to update the `accessToken`.
 
 To update the `accessToken`, you are required to provide the latest `accessToken` & `refreshToken` to the method below.
@@ -131,6 +131,7 @@ To update the `accessToken`, you are required to provide the latest `accessToken
         refreshToken = "<your refreshToken>"
     )
         .onSuccess {
+            it.accessToken
             it.refreshToken
         }
         .onError {e ->
@@ -138,7 +139,7 @@ To update the `accessToken`, you are required to provide the latest `accessToken
         }
 ```
 
-In response you will receive new `accessToken`.
+In response, you will receive a new `accessToken` and `refreshToken`.
 
 
 ### Get Access Token for existing SDK users
@@ -146,7 +147,7 @@ In response you will receive new `accessToken`.
 During the app usage, there may be several scenarios when the app loses `accessToken`, for example if the a user changes a smartphone or logs out. BTW, that is a reason why we strongly recommend you to store the `deviceToken` on your backend side. `deviceToken` cannot be restored if it is lost!
 
 We provide you with a simple re-authorization, a method that you can use to get a valid `accessToken` for a particular user throught providing `DeviceToken`
-To use this mehod, you need `deviceToken`, `instanceId`, and `instanceKey` of which group the user belongs. in this case, `Devicetoken` works as a login, `instancekey` as a password. Then you can re-login the user and get a valid `accessToken` & `refreshToken`.
+To use this method, you need `deviceToken`, `instanceId`, and `instanceKey` of which group the user belongs. in this case, `Devicetoken` works as a login, `instancekey` as a password. Then you can re-login the user and get a valid `accessToken` & `refreshToken`.
 
 ``` kotlin
     TelematicsAuth.login(
@@ -156,10 +157,33 @@ To use this mehod, you need `deviceToken`, `instanceId`, and `instanceKey` of wh
     )
         .onSuccess {
             it.accessToken
-            it.refreshToken
+            it.refreshToken~~~~
         }
         .onError {e ->
             e.printStackTrace()           
+        }
+```
+
+In response, you will receive a new `accessToken` and `refreshToken`.
+
+### Refresh Access Token or Login
+
+Refreshes `accessToken` when it expires or authorises user using `instanceId`, `instanceKey` and `deviceToken` when `refreshToken` expires.
+
+``` kotlin
+    TelematicsAuth.refreshTokenOrLogin(
+        instanceId = "<your instanceId>",
+        instanceKey = "<your instanceKey>",
+        deviceToken = "<your deviceToken>" ,
+        accessToken = "<your accessToken>",
+        refreshToken = "<your refreshToken>"
+    )
+        .onSuccess {
+            it.accessToken
+            it.refreshToken
+        }
+        .onError {e ->
+            e.printStackTrace()
         }
 ```
 
